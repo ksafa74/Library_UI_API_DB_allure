@@ -36,8 +36,8 @@ public class LibrarySteps {
     private Response response;
     private String pathPAramValue;
 
-    Map<String,String> bookAsMapFromApi;
-    Map<String,String> userAsMapFromApi;
+    Map<String,Object> bookAsMapFromApi;
+    Map<String,Object> userAsMapFromApi;
 
     LoginPage loginPage;
     BasePage basePage;
@@ -114,17 +114,30 @@ public class LibrarySteps {
     }
 
     @And("I create a random {string} as request body")
-    public void iCreateARandomAsRequestBody(String arg0) {
-        reqSpec.body(LibraryAPI_Util.getRandomBookMap());
+    public void iCreateARandomAsRequestBody(String type) {
+        if(type.equals("book")){
+            bookAsMapFromApi = LibraryAPI_Util.getRandomBookMap();
+            reqSpec= reqSpec.formParams(bookAsMapFromApi);
+        }else if(type.equals("user")){
+            userAsMapFromApi = LibraryAPI_Util.getRandomUserMap();
+            reqSpec= reqSpec.formParams(userAsMapFromApi);
+        }else {
+            throw new RuntimeException("invalid input data");
+        }
+
     }
 
     @When("I send POST request to {string} endpoint")
     public void iSendPOSTRequestToEndpoint(String arg0) {
-
+        response = RestAssured.given()
+                .spec(reqSpec)
+                .when()
+                .post(arg0);
     }
 
     @And("the field value for {string} path should be equal to {string}")
     public void theFieldValueForPathShouldBeEqualTo(String arg0, String arg1) {
+      Assert.assertEquals(arg1,response.path(arg0));
     }
 
     @And("I logged in Library UI as {string}")
