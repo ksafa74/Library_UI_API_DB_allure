@@ -137,7 +137,7 @@ public class LibrarySteps {
 
     @And("the field value for {string} path should be equal to {string}")
     public void theFieldValueForPathShouldBeEqualTo(String arg0, String arg1) {
-      Assert.assertEquals(arg1,response.path(arg0));
+      Assert.assertEquals(response.path(arg0),arg1);
     }
 
     @And("I logged in Library UI as {string}")
