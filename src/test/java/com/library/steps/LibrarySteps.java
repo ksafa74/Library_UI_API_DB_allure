@@ -39,10 +39,7 @@ public class LibrarySteps {
     LoginPage loginPage;
     BookPage bookPage;
     BookSearchPage bookSearchPage;
-    private  Map<String,String> bookAsMapStringFromUi;
-    private Map<String,String> bookAsMapStringFromDb;
-    private Map<String,String> bookAsMapStringFromApi;
-    private  Map<String,String> userAsMapStringFromUi;
+
     private Map<String,String> userAsMapStringFromDb;
     private Map<String,String> userAsMapStringFromApi;
     private String userType;
@@ -150,15 +147,15 @@ public class LibrarySteps {
     public void iLoggedInLibraryUIAs(String arg0) {
         loginPage = new LoginPage();
         loginPage.login(arg0);
-        BrowserUtil.waitFor(1);
+
     }
 
     @And("I navigate to {string} page")
     public void iNavigateToPage(String arg0) {
-        BrowserUtil.waitFor(1);
+
         bookPage = new BookPage();
         bookPage.navigateModule(arg0);
-        BrowserUtil.waitFor(1);
+
     }
 
     @And("UI, Database and API created book information must match")
@@ -168,10 +165,10 @@ public class LibrarySteps {
         //ui
         bookSearchPage=new BookSearchPage();
         bookPage.search.sendKeys(bookAsMapFromApi.get("name").toString()+ Keys.ENTER);
-        BrowserUtil.waitFor(1);
+
         bookSearchPage.clickEditByIsbn(bookAsMapFromApi.get("isbn").toString());
 
-        Map<String, Object> bookAsMapFromUi = bookSearchPage.getBookAsMap();
+        Map<String, String> bookAsMapFromUi = bookSearchPage.getBookAsMap();
 
         //db
         String query =
@@ -180,39 +177,9 @@ public class LibrarySteps {
         DB_Util.runQuery(query);
         Map<String,Object> bookAsMapFromDB = DB_Util.getRowMap(1);
 
-
         System.out.println("bookAsMapFromUi = " + bookAsMapFromUi);
         System.out.println("bookAsMapFromDB = " + bookAsMapFromDB);
         System.out.println("bookAsMapFromApi = " + bookAsMapFromApi);
-
-//        bookAsMapStringFromUi = new LinkedHashMap<>();
-//        for (Map.Entry<String, Object> entry : bookAsMapFromUi.entrySet()) {
-//            String key = entry.getKey();
-//            Object value = entry.getValue();
-//            String stringValue = String.valueOf(value);
-//            bookAsMapStringFromUi.put(key, stringValue);
-//        }
-//        bookAsMapStringFromDb = new LinkedHashMap<>();
-//        for (Map.Entry<String, Object> entry : bookAsMapFromDB.entrySet()) {
-//            String key = entry.getKey();
-//            Object value = entry.getValue();
-//            String stringValue = String.valueOf(value);
-//            bookAsMapStringFromDb.put(key, stringValue);
-//        }
-//        bookAsMapStringFromApi = new LinkedHashMap<>();
-//        for (Map.Entry<String, Object> entry : bookAsMapFromApi.entrySet()) {
-//            String key = entry.getKey();
-//            Object value = entry.getValue();
-//            String stringValue = String.valueOf(value);
-//            bookAsMapStringFromApi.put(key, stringValue);
-//        }
-
-//        //assert  ui vs api
-//        Assert.assertEquals(bookAsMapStringFromUi,bookAsMapStringFromApi);
-//        //assert db vs api
-//        Assert.assertEquals(bookAsMapStringFromDb,bookAsMapStringFromApi);
-//        //assert db vs ui
-//        Assert.assertEquals(bookAsMapStringFromUi,bookAsMapStringFromDb);
 
         //assert  ui vs api
         Assert.assertEquals(bookAsMapFromUi.toString(),bookAsMapFromApi.toString());
@@ -229,7 +196,7 @@ public class LibrarySteps {
     @And("created user name should appear in Dashboard Page")
     public void createdUserNameShouldAppearInDashboardPage() {
         String fullNameDashboardPage = Driver.getDriver().findElement(By.xpath("//a[@class='nav-link dropdown-toggle']//span")).getText();
-        Assert.assertEquals(fullNameDashboardPage,userAsMapStringFromApi.get("full_name"));
+        Assert.assertEquals(fullNameDashboardPage,userAsMapFromApi.get("full_name").toString());
     }
 
 
@@ -244,43 +211,25 @@ public class LibrarySteps {
     public void createdUserInformationShouldMatchWithDatabase() {
         DB_Util.runQuery("select full_name, email, password, user_group_id, status, start_date, end_date, address from users where full_name = '"+userAsMapFromApi.get("full_name")+"'");
         Map<String, Object> userMapDb = DB_Util.getRowMap(1);
+        userMapDb.put("password","libraryUser");
+
+        System.out.println("------------------------------------");
         System.out.println("userMapDb = " + userMapDb);
-        System.out.println("token = " + token);
-
-        userAsMapStringFromDb = new LinkedHashMap<>();
-        for (Map.Entry<String, Object> entry : userMapDb.entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-            String stringValue = String.valueOf(value);
-            userAsMapStringFromDb.put(key, stringValue);
-        }
-        userAsMapStringFromApi = new LinkedHashMap<>();
-        for (Map.Entry<String, Object> entry : userAsMapFromApi.entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-            String stringValue = String.valueOf(value);
-            userAsMapStringFromApi.put(key, stringValue);
-        }
-        userAsMapStringFromDb.put("password","libraryUser");
-
         System.out.println("------------------------------------");
-        System.out.println("userAsMapStringFromApi = " + userAsMapStringFromApi);
-        System.out.println("------------------------------------");
-        System.out.println("userAsMapStringFromDb = " + userAsMapStringFromDb);
+        System.out.println("userAsMapFromApi = " + userAsMapFromApi);
         System.out.println("------------------------------------");
         //assert api db
-        Assert.assertEquals(userAsMapStringFromDb,userAsMapStringFromApi);
+        Assert.assertEquals(userMapDb.toString(),userAsMapFromApi.toString());
     }
 
     @And("created user should be able to login Library UI")
     public void createdUserShouldBeAbleToLoginLibraryUI() {
         loginPage = new LoginPage();
-        loginPage.login(userAsMapStringFromApi.get("email"),userAsMapStringFromApi.get("password"));
-        BrowserUtil.waitFor(2);
+
+        loginPage.login(userAsMapFromApi.get("email").toString(),userAsMapFromApi.get("password").toString());
+        BrowserUtil.waitFor(3);
         String title = Driver.getDriver().getTitle();
-        Assert.assertEquals(title,"Library");
-
-
+        Assert.assertEquals("Library",title);
     }
 
     @And("I send token information as request body")

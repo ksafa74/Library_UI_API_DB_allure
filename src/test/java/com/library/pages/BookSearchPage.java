@@ -21,11 +21,11 @@ public class BookSearchPage extends BasePage {
         Driver.getDriver().findElement(By.xpath("//td[.='"+isbn+"']/..//a")).click();
     }
 
-    public Map<String,Object> getBookAsMap(){
-        Map<String,Object> book = new LinkedHashMap<>();
+    public Map<String,String> getBookAsMap(){
+        Map<String,String> book = new LinkedHashMap<>();
         book.put("name",Driver.getDriver().findElement(By.xpath("//input[@name='name']")).getAttribute("value"));
-        book.put("isbn",Integer.parseInt(Driver.getDriver().findElement(By.xpath("//input[@name='isbn']")).getAttribute("value")) );
-        book.put("year",Integer.parseInt(Driver.getDriver().findElement(By.xpath("//input[@name='year']")).getAttribute("value")));
+        book.put("isbn",(Driver.getDriver().findElement(By.xpath("//input[@name='isbn']")).getAttribute("value")) );
+        book.put("year",(Driver.getDriver().findElement(By.xpath("//input[@name='year']")).getAttribute("value")));
         book.put("author",Driver.getDriver().findElement(By.xpath("//input[@name='author']")).getAttribute("value"));
         Select select = new Select(Driver.getDriver().findElement(By.xpath("//select[@id='book_group_id']")));
         String selectText = select.getFirstSelectedOption().getAttribute("value");
