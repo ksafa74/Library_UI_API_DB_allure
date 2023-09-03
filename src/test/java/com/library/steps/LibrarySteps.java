@@ -231,7 +231,7 @@ public class LibrarySteps {
         loginPage = new LoginPage();
 
         loginPage.login(userAsMapFromApi.get("email").toString(),userAsMapFromApi.get("password").toString());
-        BrowserUtil.waitFor(1);
+        BrowserUtil.waitFor(3);
         String title = Driver.getDriver().getTitle();
         Assert.assertEquals("Library",title);
     }
