@@ -48,9 +48,9 @@ public class LibraryAPI_Util {
 
         Faker faker = new Faker() ;
         Map<String,Object> bookMap = new LinkedHashMap<>();
-        String randomBookName = faker.book().title() + faker.number().numberBetween(0, 10);
+        String randomBookName = faker.book().title() + faker.number().numberBetween(0, 10)+"kirtest";
         bookMap.put("name", randomBookName);
-        bookMap.put("isbn", faker.code().isbn10()   );
+        bookMap.put("isbn", faker.code().isbn10()+69);
         bookMap.put("year", faker.number().numberBetween(1000,2021)   );
         bookMap.put("author",faker.book().author()   );
         bookMap.put("book_category_id", faker.number().numberBetween(1,20)   );  // in library app valid category_id is 1-20
@@ -63,8 +63,8 @@ public class LibraryAPI_Util {
 
         Faker faker = new Faker() ;
         Map<String,Object> bookMap = new LinkedHashMap<>();
-        String fullName = faker.name().fullName();
-        String email=fullName.substring(0,fullName.indexOf(" "))+"@library";
+        String fullName = faker.name().fullName()+"kirtest";
+        String email=fullName.substring(0,fullName.indexOf(" "))+"@library"+"kirtest";
         System.out.println(email);
         bookMap.put("full_name", fullName );
         bookMap.put("email", email);

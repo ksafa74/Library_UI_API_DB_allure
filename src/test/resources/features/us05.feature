@@ -8,7 +8,7 @@ Feature: : As a user, I want to view my own user information using the API
     And Accept header is "application/json"
     And Request Content Type header is "application/x-www-form-urlencoded"
     And I send token information as request body
-    When I send POST request to "/decode" endpoint
+    When I send POST request to "/decode" endpoint to decode
     Then status code should be 200
     And Response Content type is "application/json; charset=utf-8"
     And the field value for "user_group_id" path should be equal to "<user_group_id>"
