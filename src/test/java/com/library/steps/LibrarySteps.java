@@ -36,6 +36,7 @@ public class LibrarySteps {
 
     private String token;
     private RequestSpecification reqSpec;
+    private ResponseSpecification responseSpecification;
     private Response response;
     private String pathPAramValue;
     private Map<String,Object> bookAsMapFromApi;
@@ -44,8 +45,6 @@ public class LibrarySteps {
     BookPage bookPage;
     BookSearchPage bookSearchPage;
 
-    private Map<String,String> userAsMapStringFromDb;
-    private Map<String,String> userAsMapStringFromApi;
     private String userType;
 
 
