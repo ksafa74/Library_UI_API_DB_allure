@@ -20,7 +20,11 @@ import org.asynchttpclient.util.Assertions;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.*;
 
 import static org.hamcrest.Matchers.*;
@@ -227,7 +231,7 @@ public class LibrarySteps {
         loginPage = new LoginPage();
 
         loginPage.login(userAsMapFromApi.get("email").toString(),userAsMapFromApi.get("password").toString());
-        BrowserUtil.waitFor(3);
+        BrowserUtil.waitFor(1);
         String title = Driver.getDriver().getTitle();
         Assert.assertEquals("Library",title);
     }
