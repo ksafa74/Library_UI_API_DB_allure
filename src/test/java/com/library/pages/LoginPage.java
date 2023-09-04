@@ -30,10 +30,10 @@ public class LoginPage {
         String username= ConfigurationReader.getProperty(userType+"_username");
         String password=ConfigurationReader.getProperty(userType+"_password");
 
-        BrowserUtil.waitFor(1);
+
         emailBox.sendKeys(username);
         passwordBox.sendKeys(password);
-        BrowserUtil.waitFor(1);
+
         loginButton.click();
 
     }

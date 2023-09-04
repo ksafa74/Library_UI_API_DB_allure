@@ -121,6 +121,8 @@ public class LibrarySteps {
 
     @And("I create a random {string} as request body")
     public void iCreateARandomAsRequestBody(String type) {
+        System.out.println("@And(\"I create a random {string} as request body\")");
+        System.out.println("bookAsMapFromApi = " + bookAsMapFromApi);
         if(type.equals("book")){
             bookAsMapFromApi = LibraryAPI_Util.getRandomBookMap();
             reqSpec= reqSpec.formParams(bookAsMapFromApi);
@@ -230,7 +232,7 @@ public class LibrarySteps {
         loginPage = new LoginPage();
 
         loginPage.login(userAsMapFromApi.get("email").toString(),userAsMapFromApi.get("password").toString());
-        BrowserUtil.waitFor(3);
+        BrowserUtil.waitForTitle("Library",10);
         String title = Driver.getDriver().getTitle();
         Assert.assertEquals("Library",title);
     }
