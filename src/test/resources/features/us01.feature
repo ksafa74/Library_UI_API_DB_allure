@@ -1,4 +1,4 @@
-@us01
+@us01 @regression
 Feature: As a librarian, I want to retrieve all users
 
 

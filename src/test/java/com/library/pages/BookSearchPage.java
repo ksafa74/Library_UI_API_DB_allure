@@ -28,8 +28,8 @@ public class BookSearchPage extends BasePage {
         book.put("year",(Driver.getDriver().findElement(By.xpath("//input[@name='year']")).getAttribute("value")));
         book.put("author",Driver.getDriver().findElement(By.xpath("//input[@name='author']")).getAttribute("value"));
         Select select = new Select(Driver.getDriver().findElement(By.xpath("//select[@id='book_group_id']")));
-        String selectText = select.getFirstSelectedOption().getAttribute("value");
-        book.put("book_category_id",selectText);
+        String selectIdNumber = select.getFirstSelectedOption().getAttribute("value");
+        book.put("book_category_id",selectIdNumber);
         book.put("description",Driver.getDriver().findElement(By.xpath("//textarea[@id='description']")).getText());
         return book;
     }

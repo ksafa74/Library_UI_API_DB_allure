@@ -1,7 +1,5 @@
 package com.library.steps;
 
-import com.github.javafaker.Faker;
-import com.library.pages.BasePage;
 import com.library.pages.BookPage;
 import com.library.pages.BookSearchPage;
 import com.library.pages.LoginPage;
@@ -10,33 +8,20 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.java.it.Ma;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import org.asynchttpclient.util.Assertions;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 import java.util.*;
-
 import static org.hamcrest.Matchers.*;
-
-import static org.hamcrest.Matchers.*;
-
 
 public class LibrarySteps {
 
     private String token;
     private RequestSpecification reqSpec;
-    private ResponseSpecification responseSpecification;
     private Response response;
     private String pathPAramValue;
     private Map<String,Object> bookAsMapFromApi;
@@ -44,7 +29,6 @@ public class LibrarySteps {
     LoginPage loginPage;
     BookPage bookPage;
     BookSearchPage bookSearchPage;
-
     private String userType;
 
 
@@ -126,12 +110,16 @@ public class LibrarySteps {
         if(type.equals("book")){
             bookAsMapFromApi = LibraryAPI_Util.getRandomBookMap();
             reqSpec= reqSpec.formParams(bookAsMapFromApi);
+            System.out.println("bookAsMapFromApi = " + bookAsMapFromApi);
         }else if(type.equals("user")){
             userAsMapFromApi = LibraryAPI_Util.getRandomUserMap();
             reqSpec= reqSpec.formParams(userAsMapFromApi);
+            System.out.println("userAsMapFromApi = " + userAsMapFromApi);
         }else {
-            throw new RuntimeException("invalid input data");
+            System.err.println("invalid type " + type);
+            System.exit(1);
         }
+
 
     }
 
@@ -168,6 +156,7 @@ public class LibrarySteps {
         //api
 
         //ui
+        BrowserUtil.waitFor(3);
         bookSearchPage=new BookSearchPage();
         bookPage.search.sendKeys(bookAsMapFromApi.get("name").toString()+ Keys.ENTER);
 
