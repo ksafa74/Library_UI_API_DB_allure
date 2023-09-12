@@ -1,4 +1,4 @@
-@us03 @regression
+@us03 @regression @smoke
 Feature: As a librarian, I want to create a new book
 
 
