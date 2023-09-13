@@ -94,6 +94,8 @@ public class LibrarySteps {
     @Then("following fields should not be null")
     public void following_fields_should_not_be_null(List<String> fields) {
         fields.forEach(p -> response.then().body(p,is(notNullValue())));
+
+
     }
 
     //end 2
