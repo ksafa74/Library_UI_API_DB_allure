@@ -83,12 +83,17 @@
                 <artifactId>reporting-plugin</artifactId>
                 <version>7.3.0</version>
             </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.25</version>
         </dependency>
+
+
+
     </dependencies>
+
 
     <build>
         <plugins>
@@ -97,18 +102,17 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
                 <configuration>
-                    <!--  <parallel>methods</parallel>
-                      <threadCount>4</threadCount>-->
-                    <testFailureIgnore>true</testFailureIgnore>
+                    <!--<parallel>methods</parallel>
+                        <threadCount>4</threadCount>-->
+                      <testFailureIgnore>true</testFailureIgnore>
                     <includes>
                         <include>/*CukesRunner.java</include>
-                        <include>/*FailedRunner.java</include>
-                    </includes>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+                     </includes>
+                 </configuration>
+             </plugin>
+         </plugins>
+     </build>
 
 
 
-</project>
+ </project>

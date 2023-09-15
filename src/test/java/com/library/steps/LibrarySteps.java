@@ -158,7 +158,7 @@ public class LibrarySteps {
         //api
 
         //ui
-        BrowserUtil.waitFor(3);
+
         bookSearchPage=new BookSearchPage();
         bookPage.search.sendKeys(bookAsMapFromApi.get("name").toString()+ Keys.ENTER);
 
@@ -223,7 +223,7 @@ public class LibrarySteps {
         loginPage = new LoginPage();
 
         loginPage.login(userAsMapFromApi.get("email").toString(),userAsMapFromApi.get("password").toString());
-        BrowserUtil.waitForTitle("Library",10);
+        BrowserUtil.waitForTitle("Library",5);
         String title = Driver.getDriver().getTitle();
         Assert.assertEquals("Library",title);
     }
