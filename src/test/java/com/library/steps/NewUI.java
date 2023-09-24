@@ -5,7 +5,7 @@ import org.junit.Test;
 public class NewUI {
 
     @Test
-    public void test(){
+    public void test1(){
 
 
 
